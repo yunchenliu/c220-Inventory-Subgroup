@@ -1,0 +1,4 @@
+Tests:
+
+Add/remove items
+Makes sure master list doesn't change
