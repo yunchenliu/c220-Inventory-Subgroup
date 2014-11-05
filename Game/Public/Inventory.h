@@ -12,12 +12,21 @@
 *
 */
 
-/*iItem is an item in the inventory, 
+/*Consum is a consumable item in the inventory, 
 a pair which specifies
-- the item's matching hex code
-- the item's quantity in the inventory
+- an int, the item's matching hex code
+- an int, the item's quantity in the inventory
 */
-typedef pair<int, int> iItem;
+typedef pair<int, int> Consum;
+/* WStat is a pair which specifies
+- an int, the Weapon's quantity
+- a bool, whether or not it's equipped*/
+typedef pair<int, bool> WStat;
+/* Weap is a weapon item in the inventory,
+a pair which specifies
+- an int, the item's matching hex code
+- a WStat*/
+typedef pair<int, WStat> Weap;
 
 class GAME_API Inventory
 {
@@ -42,7 +51,11 @@ public:
 
 private:
 
-	map<int, int> invIWeapon;
+	map<int, WStat> invIWeapon;
 	map<int, int> invIPotion;
 	map<int, int> invIBuff;
+
+	//Gives the hex code of the currently equipped weapon;
+	//The code is 0 if no weapon equipped;
+	int CurrEquipped;
 };

@@ -19,27 +19,22 @@ map Inventory::get_invIPotion() {
 map Inventory::get_invIBuff() {
 	return invIBuff;
 }
-//adding an item to a sub-inventory
-bool Community::add_person(Person _person) {
-	if (people.find(_person.get_username()) == people.end()) {
-		contact to_add(_person.get_username(), _person);
-		auto ret = people.insert(to_add);
-		return ret.second;
-	}
-	else
-		return false;
-}
+/*adds a weapon to the weapon inventory;
+if the weapon already exists, ups the
+count by 1*/
 bool Inventory::add_IWeapon(IWeapon _IWeapon) {
 
 	int idq = _IWeapon.get_id();
 
 	if (invIWeapon.find(idq) == invIWeapon.end()) {
-		iItem to_add(idq, 1);
+		WStat wq(1, false);
+		Weap to_add(idq, wq);
 		auto ret = invIWeapon.insert(to_add);
 		return ret.second;
 	}
 	else {
-
+		invIWeapon.find(idq).second.first++;
+		return true;
 	}
 }
 
@@ -51,10 +46,42 @@ void Inventory::add_IBuff(IBuff _IBuff) {
 }
 
 //removing an item from a sub-inventory
-void remove_IWeapon(IWeapon _IWeapon);
-void remove_IPotion(IPotion _IPotion);
-void remove_IBuff(IBuff _IBuff);
+void Inventory::remove_IWeapon(IWeapon _IWeapon);
+void Inventory::remove_IPotion(IPotion _IPotion);
+void Inventory::remove_IBuff(IBuff _IBuff);
 
-void unequip_IWeapon(IWeapon _IWeapon);
-void equip_IWeapon(IWeapon _IWeapon);
+//Unequips the item by changing the WStat.second to false
+bool Inventory::unequip_IWeapon(IWeapon _IWeapon) {
+
+	int idq = _IWeapon.get_id();
+	auto wfound = invIWeapon.find(idq);
+
+	if (wfound == invIWeapon.end()) {
+		return false;
+	}
+	else {
+		wfound.second.first++;
+		wfound.second.second = false;
+		CurrEquipped = 0;
+		return true;
+	}
+}
+
+/*Equips the item by changing the WStat.second to true;
+if another weapon is currently equipped, unequips that
+item and then equips the newly requested item*/
+bool Inventory::equip_IWeapon(IWeapon _IWeapon) {
+
+	int idq = _IWeapon.get_id();
+	auto wfound = invIWeapon.find(idq);
+
+	if (wfound == invIWeapon.end()) {
+		return false;
+	}
+	else if (CurrEquipped == 0) {
+		wfound.second.first--;
+		wfound.second.second = true;
+		CurrEquipped = 0;
+		return true;
+	}
 }
