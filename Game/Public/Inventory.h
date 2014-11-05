@@ -11,6 +11,14 @@
 /**
 *
 */
+
+/*iItem is an item in the inventory, 
+a pair which specifies
+- the item's matching hex code
+- the item's quantity in the inventory
+*/
+typedef pair<int, int> iItem;
+
 class GAME_API Inventory
 {
 public:
@@ -21,20 +29,20 @@ public:
 	map get_invIPotion();
 	map get_invIBuff();
 
-	void add_IWeapon(IWeapon _IWeapon);
-	void add_IPotion(IPotion _IPotion);
-	void add_IBuff(IBuff _IBuff);
+	bool add_IWeapon(IWeapon _IWeapon);
+	bool add_IPotion(IPotion _IPotion);
+	bool add_IBuff(IBuff _IBuff);
 
-	void remove_IWeapon(IWeapon _IWeapon);
-	void remove_IPotion(IPotion _IPotion);
-	void remove_IBuff(IBuff _IBuff);
+	bool remove_IWeapon(IWeapon _IWeapon);
+	bool remove_IPotion(IPotion _IPotion);
+	bool remove_IBuff(IBuff _IBuff);
 
 	void unequip_IWeapon(IWeapon _IWeapon);
 	void equip_IWeapon(IWeapon _IWeapon);
 
 private:
 
-	map<int, IWeapon> invIWeapon;
-	map<int, IPotion> invIPotion;
-	map<int, IBuff> invIBuff;
+	map<int, int> invIWeapon;
+	map<int, int> invIPotion;
+	map<int, int> invIBuff;
 };
