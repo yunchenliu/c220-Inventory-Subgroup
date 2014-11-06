@@ -4,7 +4,7 @@
 #include "Inventory.h"
 //constructor
 Inventory::Inventory()
-		: invIWeapon(map<int, int>), invIPotion(map<int, int>), invIBuff(map<int, int>) {
+		: invIWeapon(map<int, WStat>), invIPotion(map<int, int>), invIBuff(map<int, int>) {
 }
 //deconstructor
 Inventory::~Inventory() {
@@ -38,17 +38,101 @@ bool Inventory::add_IWeapon(IWeapon _IWeapon) {
 	}
 }
 
-void Inventory::add_IPotion(IPotion _IPotion) {
-	_
+bool Inventory::add_IPotion(IPotion _IPotion) {
+
+	int idq = _IPotion.get_id();
+
+	if (invIPotion.find(idq) == invIPotion.end()) {
+		Consum cq(idq, 1);
+		auto ret = invIPotion.insert(cq);
+		return ret.second;
+	}
+	else {
+		invIPotion.find(idq).second++;
+		return true;
+	}
 }
-void Inventory::add_IBuff(IBuff _IBuff) {
+bool Inventory::add_IBuff(IBuff _IBuff) {
+
+	int idq = _IBuff.get_id();
+
+	if (invIBuff.find(idq) == invIBuff.end()) {
+		Consum cq(idq, 1);
+		auto ret = invIBuff.insert(cq);
+		return ret.second;
+	}
+	else {
+		invIBuff.find(idq).second++;
+		return true;
+	}
 
 }
 
 //removing an item from a sub-inventory
-void Inventory::remove_IWeapon(IWeapon _IWeapon);
-void Inventory::remove_IPotion(IPotion _IPotion);
-void Inventory::remove_IBuff(IBuff _IBuff);
+bool Inventory::remove_IWeapon(IWeapon _IWeapon) {
+	
+	int idq = _IWeapon.get_id();
+
+	if (invIWeapon.find(idq) == invIWeapon.end())
+		return false;
+	else {
+		auto wfound = invIWeapon.find(idq);
+
+		if (wfound.second.first > 1) {
+			wfound.second.first--;
+			return true;
+		}
+		else if (wfound.second.first == 1) {
+			erase(wfound);
+			return true;
+		}
+		else
+			return false;
+	}
+}
+
+bool Inventory::remove_IPotion(IPotion _IPotion) {
+
+	int idq = _IPotion.get_id();
+
+	if (invIPotion.find(idq) == invIPotion.end())
+		return false;
+	else {
+		auto cfound = invIPotion.find(idq);
+
+		if (cfound.second > 1) {
+			cfound.second--;
+			return true;
+		}
+		else if (cfound.second == 1) {
+			erase(cfound);
+			return true;
+		}
+		else
+			return false;
+	}
+}
+bool Inventory::remove_IBuff(IBuff _IBuff) {
+
+	int idq = _IBuff.get_id();
+
+	if (invIBuff.find(idq) == invIBuff.end())
+		return false;
+	else {
+		auto cfound = invIBuff.find(idq);
+
+		if (cfound.second > 1) {
+			cfound.second--;
+			return true;
+		}
+		else if (cfound.second == 1) {
+			erase(cfound);
+			return true;
+		}
+		else
+			return false;
+	}
+}
 
 //Unequips the item by changing the WStat.second to false
 bool Inventory::unequip_IWeapon(IWeapon _IWeapon) {
@@ -69,8 +153,10 @@ bool Inventory::unequip_IWeapon(IWeapon _IWeapon) {
 
 /*Equips the item by changing the WStat.second to true;
 if another weapon is currently equipped, unequips that
-item and then equips the newly requested item*/
-bool Inventory::equip_IWeapon(IWeapon _IWeapon) {
+item and then equips the newly requested item;
+the int in the argument indicates the hand, where 1
+is the left hand and 2 is the right hand*/
+bool Inventory::equip_IWeapon(IWeapon _IWeapon, int hand) {
 
 	int idq = _IWeapon.get_id();
 	auto wfound = invIWeapon.find(idq);
@@ -78,10 +164,34 @@ bool Inventory::equip_IWeapon(IWeapon _IWeapon) {
 	if (wfound == invIWeapon.end()) {
 		return false;
 	}
-	else if (CurrEquipped == 0) {
-		wfound.second.first--;
-		wfound.second.second = true;
-		CurrEquipped = 0;
-		return true;
+
+	wfound.second.first--;
+	wfound.second.second = true;
+
+	if (hand == 1) {
+
+		if (CurrLHEquip == 0) {
+			CurrLHEquip = idq;
+			return true;
+		}
+		else if ((CurrLHEquip != 0) && (unequip_IWeapon(_IWeapon)) {
+			CurrLHEquip = idq;
+			return true;
+		}
+		else
+			return false;
+	}
+	else if (hand == 2) {
+
+		if (CurrRHEquip == 0) {
+			CurrRHEquip = idq;
+			return true;
+		}
+		else if ((CurrLHEquip != 0) && (unequip_IWeapon(_IWeapon)) {
+			CurrRHEquip = idq;
+			return true;
+		}
+		else
+			return false;
 	}
 }
