@@ -9,23 +9,17 @@
 #include <map>
 
 using namespace std;
+typedef int ItemID;
 
-/*Consum is a consumable item in the inventory, 
-a pair which specifies
-- an int, the item's matching hex code
-- an int, the item's quantity in the inventory*/
-typedef pair<int, int> Consum;
+/* IStat is a pair which specifies
+- an int, the item's hex code
+- an int, the quantity of the item in the inventory*/
+typedef pair<ItemID, int> IStat;
 
-/* WStat is a pair which specifies
-- an int, the Weapon's quantity
-- a bool, whether or not it's equipped*/
-typedef pair<int, bool> WStat;
-
-/* Weap is a weapon item in the inventory,
-a pair which specifies
-- an int, the item's matching hex code
-- a WStat*/
-typedef pair<int, WStat> Weap;
+/* Weap is an item in the inventory, a pair which specifies
+- an int, the item's hex code
+- an IStat*///
+//typedef pair<int, IStat> ;
 
 class GAME_API Inventory
 {
@@ -33,29 +27,12 @@ public:
 	Inventory();
 	~Inventory();
 
-	map get_invIWeapon();
-	map get_invIPotion();
-	map get_invIBuff();
-
-	bool add_IWeapon(IWeapon _IWeapon);
-	bool add_IPotion(IPotion _IPotion);
-	bool add_IBuff(IBuff _IBuff);
-
-	bool remove_IWeapon(IWeapon _IWeapon);
-	bool remove_IPotion(IPotion _IPotion);
-	bool remove_IBuff(IBuff _IBuff);
+	bool add_invItem(Item _Item);
+	bool remove_invItem(Item _Item);
 
 	bool unequip_IWeapon(IWeapon _IWeapon);
 	bool equip_IWeapon(IWeapon _IWeapon);
 
 private:
-
-	map<int, WStat> invIWeapon;
-	map<int, int> invIPotion;
-	map<int, int> invIBuff;
-
-	//Gives the hex code of the currently equipped weapon;
-	//The code is 0 if no weapon equipped;
-	int CurrLHEquip;
-	int CurrRHEquip;
+	map<ItemID, IStat> inv;
 };

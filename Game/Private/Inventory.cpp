@@ -4,21 +4,12 @@
 #include "Inventory.h"
 //constructor
 Inventory::Inventory()
-		: invIWeapon(map<int, WStat>), invIPotion(map<int, int>), invIBuff(map<int, int>) {
+		: invItem(map<ItemID, IStat>) {
 }
 //deconstructor
 Inventory::~Inventory() {
 }
-//getting individual sub-inventories
-map Inventory::get_invIWeapon() {
-	return invIWeapon;
-}
-map Inventory::get_invIPotion() {
-	return invIPotion;
-}
-map Inventory::get_invIBuff() {
-	return invIBuff;
-}
+
 /*adds a weapon to the weapon inventory;
 if the weapon already exists, ups the
 count by 1*/
