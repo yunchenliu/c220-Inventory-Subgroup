@@ -10,20 +10,17 @@
 
 using namespace std;
 
-/**
-*
-*/
-
 /*Consum is a consumable item in the inventory, 
 a pair which specifies
 - an int, the item's matching hex code
-- an int, the item's quantity in the inventory
-*/
+- an int, the item's quantity in the inventory*/
 typedef pair<int, int> Consum;
+
 /* WStat is a pair which specifies
 - an int, the Weapon's quantity
 - a bool, whether or not it's equipped*/
 typedef pair<int, bool> WStat;
+
 /* Weap is a weapon item in the inventory,
 a pair which specifies
 - an int, the item's matching hex code
@@ -48,8 +45,8 @@ public:
 	bool remove_IPotion(IPotion _IPotion);
 	bool remove_IBuff(IBuff _IBuff);
 
-	void unequip_IWeapon(IWeapon _IWeapon);
-	void equip_IWeapon(IWeapon _IWeapon);
+	bool unequip_IWeapon(IWeapon _IWeapon);
+	bool equip_IWeapon(IWeapon _IWeapon);
 
 private:
 
