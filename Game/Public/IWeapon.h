@@ -15,3 +15,10 @@ private:
 	int atkMod;
 	int defMod;
 };
+
+class Game_API IWSheild : public IWeapon
+{
+public:
+	IWSheild(int id, FString name, FString description, int defMod);
+	~IWSheild();
+}
