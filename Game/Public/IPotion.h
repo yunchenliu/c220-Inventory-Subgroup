@@ -12,6 +12,8 @@ public:
 	IPotion(int id, FString name, FString description, int HP_amt);
 	~IPotion();
 
+	bool use_Item(int id, Inventory &invq, AOCharacter &charq);
+
 private:
 	int HP_amt;
 };

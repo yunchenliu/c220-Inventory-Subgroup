@@ -16,11 +16,6 @@ typedef int ItemID;
 - an int, the quantity of the item in the inventory*/
 typedef pair<ItemID, int> IStat;
 
-/* Weap is an item in the inventory, a pair which specifies
-- an int, the item's hex code
-- an IStat*///
-//typedef pair<int, IStat> ;
-
 class GAME_API Inventory
 {
 public:

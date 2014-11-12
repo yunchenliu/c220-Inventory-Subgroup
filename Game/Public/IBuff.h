@@ -12,6 +12,8 @@ public:
 	IBuff(int id, FString name, FString description, float atkMultiplier);
 	~IBuff();
 
+	bool use_Item(int id, Inventory &invq, AOCharacter &charq);
+
 private:
 	float atkMultipler;
 };

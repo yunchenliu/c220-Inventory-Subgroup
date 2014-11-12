@@ -14,6 +14,9 @@ public:
     int get_id();
     FString get_name();
     FString get_description();
+
+	void bool use_Item();
+
 private:
     int id; // The HEX id of the item
     FString name; // display name of item
